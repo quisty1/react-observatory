@@ -1,0 +1,22 @@
+{
+  "job": {
+    "id": "7921497b-dafd-4d37-ae2c-165ea0671ae7",
+    "status": "done",
+    "progress": 1,
+    "createdAt": 1792156629232
+  },
+  "metadata": {
+    "fps": 30,
+    "width": 1920,
+    "height": 1080,
+    "durationInSeconds": 48.042667,
+    "codec": "h264",
+    "canPlayInVideoTag": true,
+    "supportsSeeking": true,
+    "colorSpace": "bt470bg",
+    "audioCodec": "aac",
+    "audioFileExtension": "aac",
+    "pixelFormat": "yuvj420p"
+  },
+  "httpStatus": 200
+}

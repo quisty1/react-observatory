@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "id": "current-memo",
+  "labId": "memo",
+  "source": "import { useState, useMemo, useCallback, memo } from 'react';\nimport { trace } from '@observatory/lab';\n\nconst Chart = memo(function Chart({ data, onSelect }) {\n  trace.render('Chart');\n  return (\n    <div className=\"chart\" onClick={onSelect}>\n      {data.map((n, i) => (\n        <div key={i} style={{ height: n * 2 + 'px' }} />\n      ))}\n    </div>\n  );\n});\nexport default function App() {\n  const [count, setCount] = useState(0);\n  trace.render('Dashboard', { count });\n  const data = useMemo(() => [28, 52, 38, 76, 60], []);\n  const onSelect = useCallback(() => trace.action('Выбор графика'), []);\n  return (\n    <section>\n      <span className=\"eyebrow\">Стабильные ссылки</span>\n      <h2>Аналитика проекта</h2>\n      <Chart data={data} onSelect={onSelect} />\n      <p>Несвязанное состояние: {count}</p>\n      <button\n        onClick={() => {\n          trace.action('Обновить панель');\n          setCount((n) => n + 1);\n        }}\n      >\n        Обновить панель\n      </button>\n    </section>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 5,
+      "kind": "render",
+      "line": 16,
+      "scope": "Dashboard",
+      "label": "Вызов компонента",
+      "data": {
+        "count": 0
+      }
+    },
+    {
+      "seq": 1,
+      "time": 6,
+      "kind": "render",
+      "line": 5,
+      "scope": "Chart",
+      "label": "Вызов компонента",
+      "data": {}
+    },
+    {
+      "seq": 2,
+      "time": 7,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 1.9
+      }
+    },
+    {
+      "seq": 3,
+      "time": 139,
+      "kind": "action",
+      "line": 27,
+      "scope": "Пользователь",
+      "label": "Обновить панель",
+      "data": {}
+    },
+    {
+      "seq": 4,
+      "time": 140,
+      "kind": "render",
+      "line": 16,
+      "scope": "Dashboard",
+      "label": "Вызов компонента",
+      "data": {
+        "count": 1
+      }
+    },
+    {
+      "seq": 5,
+      "time": 140,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.3
+      }
+    },
+    {
+      "seq": 6,
+      "time": 240,
+      "kind": "action",
+      "line": 27,
+      "scope": "Пользователь",
+      "label": "Обновить панель",
+      "data": {}
+    },
+    {
+      "seq": 7,
+      "time": 240,
+      "kind": "render",
+      "line": 16,
+      "scope": "Dashboard",
+      "label": "Вызов компонента",
+      "data": {
+        "count": 2
+      }
+    },
+    {
+      "seq": 8,
+      "time": 240,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.2
+      }
+    }
+  ],
+  "createdAt": 1792156027222,
+  "title": "Мемоизация без магии"
+}

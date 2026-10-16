@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "id": "current-context",
+  "labId": "context",
+  "source": "import { useState, memo, createContext, useContext } from 'react';\nimport { trace } from '@observatory/lab';\n\nconst UserContext = createContext('Алексей');\nconst ThemeContext = createContext(false);\nconst Profile = memo(function Profile() {\n  const user = useContext(UserContext);\n  trace.render('Profile');\n  return <h2>Привет, {user}!</h2>;\n});\nexport default function App() {\n  const [dark, setDark] = useState(false);\n  trace.render('Provider', { dark });\n  const content = (\n    <section\n      style={{\n        background: dark ? '#1e2b45' : '#fff',\n        color: dark ? '#fff' : '#182336',\n      }}\n    >\n      <span className=\"eyebrow\">Границы контекста</span>\n      <Profile />\n      <p>\n        Профиль использует только имя. Должна ли тема обновлять профиль?\n      </p>\n      <button\n        onClick={() => {\n          trace.action('Сменить тему');\n          setDark((v) => !v);\n        }}\n      >\n        Сменить тему\n      </button>\n    </section>\n  );\n  return (\n    <UserContext.Provider value=\"Алексей\">\n      <ThemeContext.Provider value={dark}>\n        {content}\n      </ThemeContext.Provider>\n    </UserContext.Provider>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 4,
+      "kind": "render",
+      "line": 13,
+      "scope": "Provider",
+      "label": "Вызов компонента",
+      "data": {
+        "dark": false
+      }
+    },
+    {
+      "seq": 1,
+      "time": 5,
+      "kind": "render",
+      "line": 8,
+      "scope": "Profile",
+      "label": "Вызов компонента",
+      "data": {}
+    },
+    {
+      "seq": 2,
+      "time": 6,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 1.6
+      }
+    },
+    {
+      "seq": 3,
+      "time": 138,
+      "kind": "action",
+      "line": 28,
+      "scope": "Пользователь",
+      "label": "Сменить тему",
+      "data": {}
+    },
+    {
+      "seq": 4,
+      "time": 138,
+      "kind": "render",
+      "line": 13,
+      "scope": "Provider",
+      "label": "Вызов компонента",
+      "data": {
+        "dark": true
+      }
+    },
+    {
+      "seq": 5,
+      "time": 139,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.4
+      }
+    },
+    {
+      "seq": 6,
+      "time": 221,
+      "kind": "action",
+      "line": 28,
+      "scope": "Пользователь",
+      "label": "Сменить тему",
+      "data": {}
+    },
+    {
+      "seq": 7,
+      "time": 221,
+      "kind": "render",
+      "line": 13,
+      "scope": "Provider",
+      "label": "Вызов компонента",
+      "data": {
+        "dark": false
+      }
+    },
+    {
+      "seq": 8,
+      "time": 221,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    }
+  ],
+  "createdAt": 1792156029067,
+  "title": "Контекст и границы ответственности"
+}

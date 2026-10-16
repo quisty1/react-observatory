@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "id": "current-closures",
+  "labId": "closures",
+  "source": "import { useState } from 'react';\nimport { trace, useSnapshot } from '@observatory/lab';\n\nexport default function App() {\n  const [count, setCount] = useState(0);\n  const [waiting, setWaiting] = useState(false);\n  useSnapshot('Counter', { count, waiting });\n  function later() {\n    trace.action('Отложить', { captured: count });\n    setWaiting(true);\n    setTimeout(() => {\n      trace.effect('Timer', 'Таймер сработал', { captured: count });\n      setCount((n) => n + 1);\n      setWaiting(false);\n    }, 2000);\n  }\n  return (\n    <section>\n      <span className=\"eyebrow\">Замыкание</span>\n      <h1>{count}</h1>\n      <p>\n        {waiting\n          ? 'Таймер запущен. Нажмите «+1 сейчас».'\n          : 'Отложите обновление, затем увеличьте значение.'}\n      </p>\n      <button disabled={waiting} onClick={later}>\n        +1 через 2 секунды\n      </button>\n      <button\n        className=\"secondary\"\n        onClick={() => {\n          trace.action('Сейчас');\n          setCount((n) => n + 1);\n        }}\n      >\n        +1 сейчас\n      </button>\n    </section>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 7,
+      "kind": "snapshot",
+      "line": 7,
+      "scope": "Counter",
+      "label": "Снимок значений",
+      "data": {
+        "count": 0,
+        "waiting": false
+      }
+    },
+    {
+      "seq": 1,
+      "time": 7,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 1.4
+      }
+    },
+    {
+      "seq": 2,
+      "time": 122,
+      "kind": "action",
+      "line": 9,
+      "scope": "Пользователь",
+      "label": "Отложить",
+      "data": {
+        "captured": 0
+      }
+    },
+    {
+      "seq": 3,
+      "time": 123,
+      "kind": "snapshot",
+      "line": 7,
+      "scope": "Counter",
+      "label": "Снимок значений",
+      "data": {
+        "count": 0,
+        "waiting": true
+      }
+    },
+    {
+      "seq": 4,
+      "time": 123,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.3
+      }
+    },
+    {
+      "seq": 5,
+      "time": 222,
+      "kind": "action",
+      "line": 32,
+      "scope": "Пользователь",
+      "label": "Сейчас",
+      "data": {}
+    },
+    {
+      "seq": 6,
+      "time": 222,
+      "kind": "snapshot",
+      "line": 7,
+      "scope": "Counter",
+      "label": "Снимок значений",
+      "data": {
+        "count": 1,
+        "waiting": true
+      }
+    },
+    {
+      "seq": 7,
+      "time": 222,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    },
+    {
+      "seq": 8,
+      "time": 2124,
+      "kind": "effect",
+      "line": 12,
+      "scope": "Timer",
+      "label": "Таймер сработал",
+      "data": {
+        "captured": 0
+      }
+    },
+    {
+      "seq": 9,
+      "time": 2126,
+      "kind": "snapshot",
+      "line": 7,
+      "scope": "Counter",
+      "label": "Снимок значений",
+      "data": {
+        "count": 2,
+        "waiting": false
+      }
+    },
+    {
+      "seq": 10,
+      "time": 2126,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.6
+      }
+    }
+  ],
+  "createdAt": 1792156019670,
+  "title": "Замыкания и отложенные обновления"
+}

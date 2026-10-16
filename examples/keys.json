@@ -1,0 +1,503 @@
+{
+  "version": 1,
+  "id": "current-keys",
+  "labId": "keys",
+  "source": "import { useState } from 'react';\nimport { trace, useSnapshot } from '@observatory/lab';\n\nconst initial = [\n  { id: 'a', title: 'Дизайн' },\n  { id: 'b', title: 'Разработка' },\n  { id: 'c', title: 'Проверка' },\n];\nfunction Row({ item }) {\n  const [value, setValue] = useState(item.title);\n  useSnapshot('Row:' + item.id, {\n    id: item.id,\n    value,\n    title: item.title,\n  });\n  return (\n    <label className=\"task-row\">\n      <span>{item.id}</span>\n      <input\n        aria-label={'Задача ' + item.id}\n        value={value}\n        onChange={(e) => {\n          trace.action('Редактирование', {\n            id: item.id,\n            value: e.target.value,\n          });\n          setValue(e.target.value);\n        }}\n      />\n    </label>\n  );\n}\nexport default function App() {\n  const [items, setItems] = useState(initial);\n  return (\n    <section>\n      <span className=\"eyebrow\">Идентичность</span>\n      <h2>План проекта</h2>\n      <p>Измените первую задачу и переверните список.</p>\n      {items.map((item, index) => (\n        <Row key={index} item={item} />\n      ))}\n      <button\n        onClick={() => {\n          trace.action('Перевернуть');\n          setItems((items) => [...items].reverse());\n        }}\n      >\n        Перевернуть список\n      </button>\n    </section>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 7,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Дизайн",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 1,
+      "time": 7,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:b",
+      "label": "Снимок значений",
+      "data": {
+        "id": "b",
+        "value": "Разработка",
+        "title": "Разработка"
+      }
+    },
+    {
+      "seq": 2,
+      "time": 7,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:c",
+      "label": "Снимок значений",
+      "data": {
+        "id": "c",
+        "value": "Проверка",
+        "title": "Проверка"
+      }
+    },
+    {
+      "seq": 3,
+      "time": 7,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 1.7
+      }
+    },
+    {
+      "seq": 4,
+      "time": 283,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": ""
+      }
+    },
+    {
+      "seq": 5,
+      "time": 284,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 6,
+      "time": 284,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.5
+      }
+    },
+    {
+      "seq": 7,
+      "time": 310,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "М"
+      }
+    },
+    {
+      "seq": 8,
+      "time": 311,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "М",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 9,
+      "time": 311,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    },
+    {
+      "seq": 10,
+      "time": 312,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мо"
+      }
+    },
+    {
+      "seq": 11,
+      "time": 312,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мо",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 12,
+      "time": 312,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0
+      }
+    },
+    {
+      "seq": 13,
+      "time": 314,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой"
+      }
+    },
+    {
+      "seq": 14,
+      "time": 314,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 15,
+      "time": 314,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0
+      }
+    },
+    {
+      "seq": 16,
+      "time": 317,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой "
+      }
+    },
+    {
+      "seq": 17,
+      "time": 318,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой ",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 18,
+      "time": 318,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    },
+    {
+      "seq": 19,
+      "time": 319,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой д"
+      }
+    },
+    {
+      "seq": 20,
+      "time": 319,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой д",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 21,
+      "time": 319,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0
+      }
+    },
+    {
+      "seq": 22,
+      "time": 319,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой ди"
+      }
+    },
+    {
+      "seq": 23,
+      "time": 320,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой ди",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 24,
+      "time": 320,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    },
+    {
+      "seq": 25,
+      "time": 320,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой диз"
+      }
+    },
+    {
+      "seq": 26,
+      "time": 320,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой диз",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 27,
+      "time": 320,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0
+      }
+    },
+    {
+      "seq": 28,
+      "time": 320,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой диза"
+      }
+    },
+    {
+      "seq": 29,
+      "time": 320,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой диза",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 30,
+      "time": 320,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0
+      }
+    },
+    {
+      "seq": 31,
+      "time": 321,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой дизай"
+      }
+    },
+    {
+      "seq": 32,
+      "time": 321,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой дизай",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 33,
+      "time": 321,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    },
+    {
+      "seq": 34,
+      "time": 321,
+      "kind": "action",
+      "line": 23,
+      "scope": "Пользователь",
+      "label": "Редактирование",
+      "data": {
+        "id": "a",
+        "value": "Мой дизайн"
+      }
+    },
+    {
+      "seq": 35,
+      "time": 321,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Мой дизайн",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 36,
+      "time": 321,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    },
+    {
+      "seq": 37,
+      "time": 422,
+      "kind": "action",
+      "line": 45,
+      "scope": "Пользователь",
+      "label": "Перевернуть",
+      "data": {}
+    },
+    {
+      "seq": 38,
+      "time": 422,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:c",
+      "label": "Снимок значений",
+      "data": {
+        "id": "c",
+        "value": "Мой дизайн",
+        "title": "Проверка"
+      }
+    },
+    {
+      "seq": 39,
+      "time": 422,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:b",
+      "label": "Снимок значений",
+      "data": {
+        "id": "b",
+        "value": "Разработка",
+        "title": "Разработка"
+      }
+    },
+    {
+      "seq": 40,
+      "time": 422,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Row:a",
+      "label": "Снимок значений",
+      "data": {
+        "id": "a",
+        "value": "Проверка",
+        "title": "Дизайн"
+      }
+    },
+    {
+      "seq": 41,
+      "time": 422,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.3
+      }
+    }
+  ],
+  "createdAt": 1792156024918,
+  "title": "Ключи и идентичность компонентов"
+}

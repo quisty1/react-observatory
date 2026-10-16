@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "id": "current-frames",
+  "labId": "frames",
+  "source": "import { useRef } from 'react';\nimport { trace, useSnapshot } from '@observatory/lab';\nimport { AbsoluteFill, useCurrentFrame, interpolate } from 'remotion';\nimport { Player } from '@remotion/player';\nfunction Animation() {\n  const frame = useCurrentFrame();\n  const opacity = interpolate(frame, [0, 60], [0, 1], {\n    extrapolateLeft: 'clamp',\n    extrapolateRight: 'clamp',\n  });\n  useSnapshot('Animation', { frame, opacity });\n  return (\n    <AbsoluteFill\n      style={{\n        justifyContent: 'center',\n        alignItems: 'center',\n        background: '#edf1ff',\n      }}\n    >\n      <div\n        style={{\n          opacity,\n          fontSize: 42,\n          color: '#2955e8',\n          fontWeight: 700,\n        }}\n      >\n        Привет, кадр!\n      </div>\n    </AbsoluteFill>\n  );\n}\nexport default function App() {\n  const player = useRef(null);\n  return (\n    <section>\n      <span className=\"eyebrow\">Время в Remotion</span>\n      <h2>Появление заголовка</h2>\n      <Player\n        ref={player}\n        component={Animation}\n        durationInFrames={90}\n        compositionWidth={600}\n        compositionHeight={240}\n        fps={30}\n        controls\n        style={{ width: '100%' }}\n      />\n      <p>На кадре 30 прозрачность должна быть 0.5.</p>\n      <button\n        onClick={() => {\n          trace.action('Кадр 30');\n          player.current?.seekTo(30);\n        }}\n      >\n        Кадр 30\n      </button>\n    </section>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 6,
+      "kind": "console",
+      "scope": "console",
+      "label": "warn",
+      "data": {
+        "values": [
+          "Note: Some companies are required to obtain a license to use Remotion. See: https://remotion.dev/license\nPass the `acknowledgeRemotionLicense` prop to `<Player />` function to make this message disappear."
+        ]
+      }
+    },
+    {
+      "seq": 1,
+      "time": 13,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 6.5
+      }
+    },
+    {
+      "seq": 2,
+      "time": 30,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.2
+      }
+    },
+    {
+      "seq": 3,
+      "time": 35,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Animation",
+      "label": "Снимок значений",
+      "data": {
+        "frame": 0,
+        "opacity": 0
+      }
+    },
+    {
+      "seq": 4,
+      "time": 35,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 1
+      }
+    },
+    {
+      "seq": 5,
+      "time": 50,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.3
+      }
+    },
+    {
+      "seq": 6,
+      "time": 142,
+      "kind": "action",
+      "line": 52,
+      "scope": "Пользователь",
+      "label": "Кадр 30",
+      "data": {}
+    },
+    {
+      "seq": 7,
+      "time": 144,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Animation",
+      "label": "Снимок значений",
+      "data": {
+        "frame": 30,
+        "opacity": 0.5
+      }
+    },
+    {
+      "seq": 8,
+      "time": 144,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 1.2
+      }
+    },
+    {
+      "seq": 9,
+      "time": 167,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    }
+  ],
+  "createdAt": 1792156030793,
+  "title": "Кадры и интерполяция Remotion"
+}

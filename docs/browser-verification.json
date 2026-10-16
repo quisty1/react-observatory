@@ -1,0 +1,21 @@
+[
+  {
+    "browser": "Chrome",
+    "available": true,
+    "passed": true,
+    "videoDuration": 48.042667,
+    "errors": []
+  },
+  {
+    "browser": "Firefox",
+    "available": false,
+    "reason": "Error: browserType.launch: Executable doesn't exist at /Users/quisty/Library/Caches/ms-playwright/firefox-1555/firefox/Nightly.app/Contents/MacOS/firefox"
+  },
+  {
+    "browser": "WebKit",
+    "available": true,
+    "passed": true,
+    "videoDuration": 48,
+    "errors": []
+  }
+]

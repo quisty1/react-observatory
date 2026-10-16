@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.renders/
+work/
+test-results/
+playwright-report/
+public/sandbox-runtime.js
+*.tsbuildinfo

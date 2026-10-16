@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "id": "current-effects",
+  "labId": "effects",
+  "source": "import { useState, useEffect } from 'react';\nimport { trace, useSnapshot } from '@observatory/lab';\n\nfunction Clock() {\n  const [ticks, setTicks] = useState(0);\n  useSnapshot('Clock', { ticks });\n  useEffect(() => {\n    trace.effect('Clock', 'Подписка создана');\n    const timer = setInterval(() => {\n      setTicks((n) => n + 1);\n      trace.event('Тик подписки');\n    }, 700);\n    return () => {\n      clearInterval(timer);\n      trace.cleanup('Clock');\n    };\n  }, []);\n  return (\n    <h1>\n      {ticks}\n      <small> тиков</small>\n    </h1>\n  );\n}\nexport default function App() {\n  const [visible, setVisible] = useState(true);\n  return (\n    <section>\n      <span className=\"eyebrow\">Жизненный цикл</span>\n      {visible ? <Clock /> : <h2>Компонент скрыт</h2>}\n      <p>Следите за журналом после выключения часов.</p>\n      <button\n        onClick={() => {\n          trace.action(visible ? 'Скрыть часы' : 'Показать часы');\n          setVisible((v) => !v);\n        }}\n      >\n        {visible ? 'Скрыть часы' : 'Показать часы'}\n      </button>\n    </section>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 7,
+      "kind": "snapshot",
+      "line": 6,
+      "scope": "Clock",
+      "label": "Снимок значений",
+      "data": {
+        "ticks": 0
+      }
+    },
+    {
+      "seq": 1,
+      "time": 7,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 1.4
+      }
+    },
+    {
+      "seq": 2,
+      "time": 7,
+      "kind": "effect",
+      "line": 8,
+      "scope": "Clock",
+      "label": "Подписка создана",
+      "data": {}
+    },
+    {
+      "seq": 3,
+      "time": 710,
+      "kind": "snapshot",
+      "line": 11,
+      "scope": "Эксперимент",
+      "label": "Тик подписки",
+      "data": {}
+    },
+    {
+      "seq": 4,
+      "time": 712,
+      "kind": "snapshot",
+      "line": 6,
+      "scope": "Clock",
+      "label": "Снимок значений",
+      "data": {
+        "ticks": 1
+      }
+    },
+    {
+      "seq": 5,
+      "time": 712,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.7
+      }
+    },
+    {
+      "seq": 6,
+      "time": 1088,
+      "kind": "action",
+      "line": 34,
+      "scope": "Пользователь",
+      "label": "Скрыть часы",
+      "data": {}
+    },
+    {
+      "seq": 7,
+      "time": 1088,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.2
+      }
+    },
+    {
+      "seq": 8,
+      "time": 1088,
+      "kind": "cleanup",
+      "line": 15,
+      "scope": "Clock",
+      "label": "Эффект очищен",
+      "data": {}
+    }
+  ],
+  "createdAt": 1792156023382,
+  "title": "Эффекты и очистка подписок"
+}

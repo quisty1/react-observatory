@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "id": "current-springs",
+  "labId": "springs",
+  "source": "import { useRef } from 'react';\nimport { trace, useSnapshot } from '@observatory/lab';\nimport {\n  AbsoluteFill,\n  useCurrentFrame,\n  useVideoConfig,\n  spring,\n} from 'remotion';\nimport { Player } from '@remotion/player';\nfunction Animation() {\n  const frame = useCurrentFrame();\n  const { fps } = useVideoConfig();\n  const a = spring({\n    frame,\n    fps,\n    config: { damping: 18, stiffness: 90 },\n  });\n  const b = spring({\n    frame: frame - 12,\n    fps,\n    config: { damping: 18, stiffness: 90 },\n  });\n  useSnapshot('Springs', { frame, a, b });\n  return (\n    <AbsoluteFill\n      style={{\n        justifyContent: 'center',\n        gap: 20,\n        padding: 30,\n        background: '#edf1ff',\n      }}\n    >\n      {[a, b].map((value, i) => (\n        <div\n          key={i}\n          style={{\n            width: value * 85 + 5 + '%',\n            height: 32,\n            borderRadius: 6,\n            background: i ? '#8c74cf' : '#2955e8',\n          }}\n        />\n      ))}\n    </AbsoluteFill>\n  );\n}\nexport default function App() {\n  const player = useRef(null);\n  return (\n    <section>\n      <span className=\"eyebrow\">Хореография</span>\n      <h2>Движение с задержкой</h2>\n      <Player\n        ref={player}\n        component={Animation}\n        durationInFrames={100}\n        compositionWidth={600}\n        compositionHeight={240}\n        fps={30}\n        controls\n        style={{ width: '100%' }}\n      />\n      <p>Второй элемент должен начинать на 12 кадров позже.</p>\n      <button\n        onClick={() => {\n          trace.action('Кадр 18');\n          player.current?.seekTo(18);\n        }}\n      >\n        Кадр 18\n      </button>\n    </section>\n  );\n}\n",
+  "strict": false,
+  "events": [
+    {
+      "seq": 0,
+      "time": 6,
+      "kind": "console",
+      "scope": "console",
+      "label": "warn",
+      "data": {
+        "values": [
+          "Note: Some companies are required to obtain a license to use Remotion. See: https://remotion.dev/license\nPass the `acknowledgeRemotionLicense` prop to `<Player />` function to make this message disappear."
+        ]
+      }
+    },
+    {
+      "seq": 1,
+      "time": 13,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "mount",
+      "data": {
+        "durationMs": 5.9
+      }
+    },
+    {
+      "seq": 2,
+      "time": 23,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.6
+      }
+    },
+    {
+      "seq": 3,
+      "time": 28,
+      "kind": "snapshot",
+      "line": 23,
+      "scope": "Springs",
+      "label": "Снимок значений",
+      "data": {
+        "frame": 0,
+        "a": 0,
+        "b": 0
+      }
+    },
+    {
+      "seq": 4,
+      "time": 28,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 1
+      }
+    },
+    {
+      "seq": 5,
+      "time": 44,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.3
+      }
+    },
+    {
+      "seq": 6,
+      "time": 136,
+      "kind": "action",
+      "line": 66,
+      "scope": "Пользователь",
+      "label": "Кадр 18",
+      "data": {}
+    },
+    {
+      "seq": 7,
+      "time": 137,
+      "kind": "snapshot",
+      "line": 23,
+      "scope": "Springs",
+      "label": "Снимок значений",
+      "data": {
+        "frame": 18,
+        "a": 0.9878307916991136,
+        "b": 0.5835686211610924
+      }
+    },
+    {
+      "seq": 8,
+      "time": 137,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 1.4
+      }
+    },
+    {
+      "seq": 9,
+      "time": 162,
+      "kind": "commit",
+      "scope": "Root",
+      "label": "update",
+      "data": {
+        "durationMs": 0.1
+      }
+    }
+  ],
+  "createdAt": 1792156032560,
+  "title": "Пружины и хореография"
+}
